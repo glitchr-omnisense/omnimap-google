@@ -1,0 +1,48 @@
+{
+    "name": "omnimap/google",
+    "type": "library",
+    "description": "Omnimap's Google Maps, under any PHP host: the live map drawn by the Maps JavaScript API (a driver for omnimap's script: markers, styled map types by zoom), a view as a Static Maps image (the URL signed with the secret), geocoding through geocoder-php's GoogleMaps provider, and glitchr/ux-google's names for the pictures it captured.",
+    "keywords": ["map", "maps", "google-maps", "static-maps", "geocoding", "framework-agnostic", "omnimap"],
+    "homepage": "https://github.com/glitchr-studio/omnimap-google",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marco Meyer",
+            "email": "marco.meyer@glitchr.io"
+        }
+    ],
+    "require": {
+        "php": ">=8.2",
+        "geocoder-php/google-maps-provider": "^4.7",
+        "omniscient/omnimap": "^1.0@dev",
+        "psr/http-client": "^1.0",
+        "psr/simple-cache": "^2.0|^3.0",
+        "symfony/http-client-contracts": "^3.0"
+    },
+    "require-dev": {
+        "nyholm/psr7": "^1.8",
+        "phpunit/phpunit": "^11.0",
+        "symfony/http-client": "^6.4|^7.0|^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Omnimap\\Google\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Omnimap\\Google\\Tests\\": "Tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-1.x": "1.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
