@@ -50,7 +50,11 @@ the host's responsibility.
   through a recorded client; geocoding through geocoder-php with an answer written from the
   Geocoding API's documentation (one call, the second from the cache); every class loading with
   the package's requirements alone (`BareTest`).
-- Not verified live in this package: Google's answers themselves (no key in the harness).
+- Verified on lesringostars (2026-10-23): the names of the pictures ux-google captured kept
+  (tcIj2DZnhR2xGsZ8K8t2ID4PKVg, its 24 tiles served at the same addresses); no request to Google
+  from a visitor's page (headless Chrome, 1440 and 390 pixels).
+- Not verified live: Google's answers themselves (Static Maps, Geocoding, the Maps JavaScript API
+  drawn by assets/google.js) - no key in the harness.
 
 ## Licence
 
