@@ -130,9 +130,13 @@ final class GoogleProvider implements MapRendererInterface, StaticMapInterface, 
                 throw ProviderException::answered('Google Static Maps', 'a map image', $status);
             }
             $bytes = $response->getContent();
-            $type = $response->getHeaders()['content-type'][0] ?? 'image/png';
         } catch (HttpException $e) {
             throw new UnreachableException('Google Static Maps could not be reached: '.$e->getMessage(), 0, $e);
+        }
+        // The media type the bytes are, not the one announced: a proxy's page in a 200 is no map.
+        $type = (getimagesizefromstring($bytes) ?: [])['mime'] ?? null;
+        if (null === $type) {
+            throw ProviderException::answered('Google Static Maps', 'a map image', 'something that is not an image');
         }
         $clamped = self::clamp($size);
 

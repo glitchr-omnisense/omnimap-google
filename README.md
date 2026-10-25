@@ -43,6 +43,7 @@ the host's responsibility.
 
 ## Verified, and not
 
+- Verified (the core's harness, PHP 8.4): omnimap's conformance suite (`Tests/GoogleContractTest.php`, `Omnimap\Testing\ProviderContractTests`), offline, on recorded answers; a 200 whose body is not an image (a proxy's page) is a ProviderException (before: returned as the map's image).
 - Verified (the core's harness, PHP 8.4): ux-google's names for three views, against the rule
   lesringostars' `App\Page\DestinationMap` copies; the description; the Static Maps URL, its
   size clamped, its markers and style, and its signature - equal to the one geocoder-php's own

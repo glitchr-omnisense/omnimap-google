@@ -13,6 +13,7 @@ use Omnimap\Model\Size;
 use Omnimap\Registry;
 use Omnimap\Signer;
 use Omnimap\Testing\ArrayCache;
+use Omnimap\Testing\PlainTiles;
 use Omnimap\Testing\RecordedHttpClient;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\MockHttpClient;
@@ -94,11 +95,12 @@ final class GoogleProviderTest extends TestCase
 
     public function testAStaticImage(): void
     {
-        $http = new RecordedHttpClient(static fn () => [200, 'PNG', ['content-type' => ['image/png']]]);
+        $png = PlainTiles::png(3, 1, 2, 300);
+        $http = new RecordedHttpClient(static fn () => [200, $png, ['content-type' => ['image/png']]]);
         $registry = new Registry([new GoogleFactory($http)], ['maps' => ['factory' => 'google', 'options' => ['api_key' => 'k']]]);
         $image = $registry->staticMap('maps')->image(new MapView(new LatLng(1, 2), 3), new Size(300, 200));
 
-        self::assertSame(['PNG', 'image/png', '300x200'], [$image->bytes, $image->mimeType, (string) $image->size]);
+        self::assertSame([$png, 'image/png', '300x200'], [$image->bytes, $image->mimeType, (string) $image->size]);
         self::assertSame('https://maps.googleapis.com/maps/api/staticmap?center=1,2&zoom=3&size=300x200&scale=1&key=k', $http->requests[0]['url']);
     }
 
