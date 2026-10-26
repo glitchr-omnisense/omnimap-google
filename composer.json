@@ -3,7 +3,7 @@
     "type": "library",
     "description": "Omnimap's Google Maps, under any PHP host: the live map drawn by the Maps JavaScript API (a driver for omnimap's script: markers, styled map types by zoom), a view as a Static Maps image (the URL signed with the secret), geocoding through geocoder-php's GoogleMaps provider, and glitchr/ux-google's names for the pictures it captured.",
     "keywords": ["map", "maps", "google-maps", "static-maps", "geocoding", "framework-agnostic", "omnimap"],
-    "homepage": "https://github.com/glitchr-studio/omnimap-google",
+    "homepage": "https://github.com/glitchr-omnisense/omnimap-google",
     "license": "MIT",
     "authors": [
         {
@@ -14,7 +14,7 @@
     "require": {
         "php": ">=8.2",
         "geocoder-php/google-maps-provider": "^4.7",
-        "omniscient/omnimap": "^1.0@dev",
+        "omnisense/omnimap": "^1.0@dev",
         "psr/http-client": "^1.0",
         "psr/simple-cache": "^2.0|^3.0",
         "symfony/http-client-contracts": "^3.0"

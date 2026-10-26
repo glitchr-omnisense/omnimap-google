@@ -1,6 +1,6 @@
 # omnimap/google
 
-[omniscient/omnimap](https://github.com/glitchr-studio/omnimap)'s Google Maps, under any PHP
+[omnisense/omnimap](https://github.com/glitchr-omnisense/omnimap)'s Google Maps, under any PHP
 host:
 
 - **the live map** - `GoogleProvider::describe()` for `assets/google.js`, which loads the Maps

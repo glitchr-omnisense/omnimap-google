@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * omnimap/google with no framework: every class of the package loaded in a
  * PHP process of its own, with nothing from outside but what it requires -
- * omniscient/omnimap, geocoder-php's google-maps-provider and what it needs (PSR-18, PSR-7
+ * omnisense/omnimap, geocoder-php's google-maps-provider and what it needs (PSR-18, PSR-7
  * and its discovery), the PSR interfaces and Symfony's HTTP client contracts
  * (interfaces only): no framework, no HTTP client, no application, even in
  * the harness where they are installed beside it.
@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
 final class BareTest extends TestCase
 {
     private const FOREIGN = '~^(?:Symfony\\\\(?!Contracts\\\\HttpClient\\\\|Polyfill\\\\)|(?:Illuminate|Laravel|Doctrine|Twig|League|GuzzleHttp|Nyholm|Omnibridge|Base|App)\\\\)~';
-    private const ALLOWED_FILES = '~/vendor/(?:omniscient/omnimap|omnimap/google|psr/[a-z-]+|php-http/[a-z-]+|symfony/http-client-contracts|willdurand/geocoder|geocoder-php/[a-z-]+|composer)/|/vendor/autoload\.php$|^/omnimap/(?:core|plugins/google)/~';
+    private const ALLOWED_FILES = '~/vendor/(?:omnisense/omnimap|omnimap/google|psr/[a-z-]+|php-http/[a-z-]+|symfony/http-client-contracts|willdurand/geocoder|geocoder-php/[a-z-]+|composer)/|/vendor/autoload\.php$|^/omnimap/(?:core|plugins/google)/~';
 
     public function testEveryClassLoadsWithTheRequiredPackagesAlone(): void
     {

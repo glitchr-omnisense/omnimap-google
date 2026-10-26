@@ -1,6 +1,6 @@
 # omnimap/google
 
-Google Maps for [omniscient/omnimap](https://github.com/glitchr-studio/omnimap): the live map drawn
+Google Maps for [omnisense/omnimap](https://github.com/glitchr-omnisense/omnimap): the live map drawn
 in the browser by the Maps JavaScript API (`assets/google.js`, a driver for omnimap's
 `omnimap.js`), a view as an image made by the Static Maps API, the URL signed with the URL signing
 secret, and geocoding through geocoder-php's `GoogleMaps` provider. A `legacy_signature` option
@@ -21,11 +21,11 @@ There is no sandbox: every call is billed to the key's Google Cloud project.
 composer require omnimap/google
 ```
 
-Requires PHP 8.2, `omniscient/omnimap` (1.x), `geocoder-php/google-maps-provider` (^4.7),
+Requires PHP 8.2, `omnisense/omnimap` (1.x), `geocoder-php/google-maps-provider` (^4.7),
 `psr/http-client`, `psr/simple-cache` and `symfony/http-client-contracts`. Static Maps needs a
 Symfony HTTP client (`symfony/http-client`), geocoding a PSR-18 client (Symfony's `Psr18Client`
 with `nyholm/psr7`, or any other). In the browser, `assets/google.js` is registered with
-`omnimap.js` ([The browser](https://github.com/glitchr-studio/omnimap/blob/1.x/docs/javascript.md)).
+`omnimap.js` ([The browser](https://github.com/glitchr-omnisense/omnimap/blob/1.x/docs/javascript.md)).
 With omnibridge/symfony or omnibridge/laravel, the factory is registered as soon as the package
 is installed.
 
