@@ -57,6 +57,10 @@ the host's responsibility.
 - Not verified live: Google's answers themselves (Static Maps, Geocoding, the Maps JavaScript API
   drawn by assets/google.js) - no key in the harness.
 
-## Licence
+## Responsibility
 
-MIT. An unofficial client, affiliated with Google in no way.
+Unofficial; not affiliated with, endorsed or sponsored by Google. Google keeps its own terms (the
+Google Maps Platform Terms of Service, its attribution and caching rules, its prices: each key's
+requests are billed); whoever runs this package complies with them, and answers for the keys it
+holds and for the consent its visitors give before a map of Google's is drawn ([Consent and
+terms](#consent-and-terms)). MIT licence.
