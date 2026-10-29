@@ -64,7 +64,7 @@ final class GoogleProvider implements MapRendererInterface, StaticMapInterface, 
     {
         return new Capabilities(
             renderer: true,
-            staticMap: null !== $this->http,
+            staticMap: null !== $this->http && null !== $this->serverKey,
             geocoder: null !== $this->geocoder,
             browserHosts: ['maps.googleapis.com', 'maps.gstatic.com', 'fonts.googleapis.com'],
             cookies: false,
@@ -121,6 +121,9 @@ final class GoogleProvider implements MapRendererInterface, StaticMapInterface, 
     {
         if (null === $this->http) {
             throw new NotSupportedException('No HTTP client was given to the Google provider: no Static Maps.');
+        }
+        if (null === $this->serverKey) {
+            throw new NotSupportedException('No key was given to the Google provider (server_key or api_key): no Static Maps.');
         }
         $url = $this->staticUrl($view, $size, $scale);
         try {

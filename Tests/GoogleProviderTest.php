@@ -4,6 +4,7 @@ namespace Omnimap\Google\Tests;
 
 use Geocoder\Provider\GoogleMaps\GoogleMaps;
 use Geocoder\Query\GeocodeQuery;
+use Omnimap\Exception\NotSupportedException;
 use Omnimap\Google\GoogleFactory;
 use Omnimap\Google\GoogleProvider;
 use Omnimap\Model\LatLng;
@@ -102,6 +103,24 @@ final class GoogleProviderTest extends TestCase
 
         self::assertSame([$png, 'image/png', '300x200'], [$image->bytes, $image->mimeType, (string) $image->size]);
         self::assertSame('https://maps.googleapis.com/maps/api/staticmap?center=1,2&zoom=3&size=300x200&scale=1&key=k', $http->requests[0]['url']);
+    }
+
+    /** No key: no image declared (the bridges' cache.make: auto makes none), and none asked of Google. */
+    public function testNoKeyNoStaticMap(): void
+    {
+        $http = new RecordedHttpClient(static fn () => [200, PlainTiles::png(3, 1, 2, 300), ['content-type' => ['image/png']]]);
+        $provider = (new GoogleFactory($http))->create();
+        \assert($provider instanceof GoogleProvider);
+
+        self::assertFalse($provider->capabilities()->staticMap, 'an HTTP client and no key: no image');
+        try {
+            $provider->image(new MapView(new LatLng(1, 2), 3), new Size(300, 200));
+            self::fail('A Static Maps image asked without a key.');
+        } catch (NotSupportedException $e) {
+            self::assertStringContainsString('server_key', $e->getMessage());
+        }
+        self::assertSame([], $http->requests);
+        self::assertTrue((new GoogleFactory($http))->create(['api_key' => 'k'])->capabilities()->staticMap, 'the browser key serves the server when server_key is empty');
     }
 
     /** An answer in the format of Google's Geocoding API documentation (written from it, not recorded: no key here). */

@@ -72,19 +72,13 @@ A view's own options, under `MapView::options('google')`:
 | Capability | Supported |
 |---|---|
 | renderer (`MapRendererInterface`) | yes, always |
-| static map (`StaticMapInterface`) | with the HTTP client; the call needs `server_key` or `api_key` too |
+| static map (`StaticMapInterface`) | with the HTTP client and `server_key` or `api_key` |
 | geocoder (`GeocoderInterface`) | with the PSR-18 client and `server_key` or `api_key` |
 | tiles (`TileSourceInterface`) | no |
 
 Browser hosts: `maps.googleapis.com`, `maps.gstatic.com`, `fonts.googleapis.com`; cookies: declared
 `false`. Terms: `https://cloud.google.com/maps-platform/terms`,
 `https://developers.google.com/maps/documentation/javascript/policies`.
-
-> [!WARNING]
-> Known defect: with the HTTP client and no key, `capabilities()->staticMap` is `true`, where
-> it should be `false`: `image()` then throws `InvalidConfigException` (`Google Static Maps needs a
-> key (server_key or api_key).`) instead of `NotSupportedException`, and omnibridge's
-> `cache.make: auto` tries to make pictures it cannot.
 
 ## Behaviour
 
@@ -210,8 +204,9 @@ omnimap:
 - Static Maps: a status other than 200 is a `ProviderException` (`Google Static Maps answered 403
   for a map image.`), bytes that are not an image too (`... answered something that is not an
   image for a map image.`); a transport failure an `UnreachableException` (`Google Static Maps
-  could not be reached: ...`); no key an `InvalidConfigException`; no HTTP client a
-  `NotSupportedException`.
+  could not be reached: ...`); no HTTP client or no key a `NotSupportedException` from `image()`
+  (`staticMap` is off), before any request; `staticUrl()` without a key an
+  `InvalidConfigException`.
 - Geocoding: geocoder-php's errors (Google's `REQUEST_DENIED`, `OVER_QUERY_LIMIT`, an invalid
   answer) are `ProviderException`s naming `google_maps` and the question, a network failure an
   `UnreachableException`; no PSR-18 client or no key a `NotSupportedException`.

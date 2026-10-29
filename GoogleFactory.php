@@ -23,8 +23,8 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  *   geocoder_ttl       how long a geocoder's answer is kept, in seconds (30 days)
  *
  * The HTTP client (Static Maps) and the PSR-18 client (geocoder-php's
- * GoogleMaps provider) are the application's; without them, those
- * capabilities are off.
+ * GoogleMaps provider) are the application's; without them, or without a
+ * key (server_key, else api_key), those capabilities are off.
  */
 final class GoogleFactory extends ProviderFactory
 {
