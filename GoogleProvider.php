@@ -8,6 +8,7 @@ use Omnimap\Exception\NotSupportedException;
 use Omnimap\Exception\ProviderException;
 use Omnimap\Exception\UnreachableException;
 use Omnimap\Geocoding\GeocoderPhp;
+use Omnimap\Http\Redaction;
 use Omnimap\GeocoderInterface;
 use Omnimap\MapRendererInterface;
 use Omnimap\Model\Image;
@@ -134,7 +135,10 @@ final class GoogleProvider implements MapRendererInterface, StaticMapInterface, 
             }
             $bytes = $response->getContent();
         } catch (HttpException $e) {
-            throw new UnreachableException('Google Static Maps could not be reached: '.$e->getMessage(), 0, $e);
+            // The key and the signature, in the URL's query, masked in the message and the previous, a copy; no trace keeps arguments.
+            $secrets = Redaction::secrets($url);
+
+            throw Redaction::withoutArguments(new UnreachableException('Google Static Maps could not be reached: '.Redaction::text($e->getMessage(), $secrets), 0, Redaction::copy($e, $secrets)));
         }
         // The media type the bytes are, not the one announced: a proxy's page in a 200 is no map.
         $type = (getimagesizefromstring($bytes) ?: [])['mime'] ?? null;

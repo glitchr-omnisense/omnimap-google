@@ -123,6 +123,43 @@ final class GoogleProviderTest extends TestCase
         self::assertTrue((new GoogleFactory($http))->create(['api_key' => 'k'])->capabilities()->staticMap, 'the browser key serves the server when server_key is empty');
     }
 
+    /**
+     * Google not reached, for an image and for a geocoding: nothing of the server key or the
+     * signature anywhere in what a log of the whole chain writes - the messages, the previous
+     * exceptions (copies of the clients', their class kept), the traces' arguments when
+     * zend.exception_ignore_args is off.
+     */
+    public function testNoPartOfAnUnreachableChainHoldsTheKey(): void
+    {
+        $ignoreArgs = ini_set('zend.exception_ignore_args', '0');
+        $down = new MockHttpClient(static fn (string $method, string $url) => new MockResponse('', ['error' => \sprintf('Could not resolve host: maps.googleapis.com for "%s".', $url)]));
+        $provider = (new GoogleFactory($down, new Psr18Client($down)))->create(['api_key' => 'browser-key-123', 'server_key' => 'server-key-456', 'secret' => self::SECRET]);
+        \assert($provider instanceof GoogleProvider);
+        $signature = (string) parse_url($provider->staticUrl(new MapView(new LatLng(1, 2), 3), new Size(300, 200)), \PHP_URL_QUERY);
+        parse_str($signature, $query);
+        $signature = \is_string($query['signature'] ?? null) ? $query['signature'] : '';
+        self::assertNotSame('', $signature);
+
+        try {
+            foreach (['image' => static fn () => $provider->image(new MapView(new LatLng(1, 2), 3), new Size(300, 200)), 'geocode' => static fn () => $provider->geocode('Osaka, Japan')] as $call) {
+                try {
+                    $call();
+                    self::fail('no exception');
+                } catch (\Omnimap\Exception\UnreachableException $e) {
+                    self::assertNotNull($e->getPrevious());
+                    for ($one = $e; null !== $one; $one = $one->getPrevious()) {
+                        foreach (['server-key-456', $signature] as $secret) {
+                            self::assertStringNotContainsString($secret, $one->getMessage());
+                            self::assertStringNotContainsString($secret, print_r($one->getTrace(), true));
+                        }
+                    }
+                }
+            }
+        } finally {
+            ini_set('zend.exception_ignore_args', false !== $ignoreArgs ? $ignoreArgs : '1');
+        }
+    }
+
     /** An answer in the format of Google's Geocoding API documentation (written from it, not recorded: no key here). */
     public function testGeocodingThroughGeocoderPhp(): void
     {
