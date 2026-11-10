@@ -17,6 +17,8 @@ use Omnimap\Model\MapView;
 use Omnimap\Model\Size;
 use Omnimap\Signer;
 use Omnimap\StaticMapInterface;
+use Omnisense\Contracts\Policy\DeclaresUsagePolicyInterface;
+use Omnisense\Contracts\Policy\UsagePolicy;
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface as HttpException;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -30,9 +32,19 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  *   styles      list of {name, rules: [{featureType, elementType, stylers: [{color: '#99d7fe'}]}], baseMapTypeId}
  *   zoomStyles  {default: <style name>, below: {4: <name>, 7: <name>}}: the style shown below each zoom
  *   map         any other google.maps.MapOptions, as JSON
+ *
+ * Its usage policy (policy.json): the Google Maps Platform Terms - no
+ * caching of Google Maps Content but what the Service Specific Terms allow
+ * (a geocode's coordinates for 30 days), no use with a non-Google map,
+ * Google's attribution kept; the quotas are the Cloud project's.
  */
-final class GoogleProvider implements MapRendererInterface, StaticMapInterface, GeocoderInterface
+final class GoogleProvider implements MapRendererInterface, StaticMapInterface, GeocoderInterface, DeclaresUsagePolicyInterface
 {
+    /** Google Maps Platform's terms, as data. */
+    public const POLICY = __DIR__.'/policy.json';
+
+    private static ?UsagePolicy $policy = null;
+
     public const STATIC_URL = 'https://maps.googleapis.com/maps/api/staticmap';
 
     /** The largest image Static Maps makes, per side, at scale 1. */
@@ -70,7 +82,13 @@ final class GoogleProvider implements MapRendererInterface, StaticMapInterface, 
             browserHosts: ['maps.googleapis.com', 'maps.gstatic.com', 'fonts.googleapis.com'],
             cookies: false,
             terms: ['https://cloud.google.com/maps-platform/terms', 'https://developers.google.com/maps/documentation/javascript/policies'],
+            policy: $this->usagePolicy(),
         );
+    }
+
+    public function usagePolicy(): UsagePolicy
+    {
+        return self::$policy ??= UsagePolicy::fromFile(self::POLICY);
     }
 
     public function describe(MapView $view): array

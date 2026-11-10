@@ -1,0 +1,38 @@
+{
+    "$schema": "https://github.com/glitchr-omnisense/contracts/blob/1.x/resources/usage-policy.schema.json",
+    "provider": "google",
+    "rateLimits": null,
+    "concurrency": null,
+    "rights": {
+        "commercial": "allowed",
+        "openSourceRequired": null,
+        "caching": {
+            "permission": "forbidden",
+            "maxTtl": null
+        },
+        "storage": "forbidden",
+        "redistribution": "forbidden",
+        "attribution": {
+            "required": true,
+            "text": "Google Maps",
+            "url": "https://developers.google.com/maps/documentation/javascript/policies",
+            "where": ["map", "display"]
+        },
+        "licence": null
+    },
+    "requirements": {
+        "key": true,
+        "userAgent": {
+            "required": false,
+            "pattern": null
+        }
+    },
+    "provenance": {
+        "terms": "https://cloud.google.com/maps-platform/terms",
+        "policy": "https://cloud.google.com/maps-platform/terms/maps-service-terms",
+        "verifiedAt": "2026-11-10",
+        "declaredBy": "maintainer",
+        "contact": null,
+        "notes": "Google Maps Platform Terms (last modified 2026-08-26) and Service Specific Terms (2026-10-28). Limits: quotas are per Cloud project, set and shown in the Cloud console (Google Maps Platform > Quotas); the usage and billing pages of the Geocoding and Maps Static APIs publish no default figure, so none is declared (unsigned Static Maps requests have a lower quota than signed ones). Caching: \"Customer will not cache Google Maps Content except as expressly permitted under the Maps Service Specific Terms\": the Geocoding API's latitude and longitude for up to 30 consecutive calendar days (6.3.1; the geocoder_ttl default), place IDs indefinitely; no pre-fetching, indexing, storing, resharing or rehosting outside the Services, no bulk download of tiles or geocodes. A picture of a Google map kept in omnimap's map cache is Google Maps Content: keep the map cache to other providers. Display: the Google Maps Core Services are not used with or near a non-Google map, and Geocoding API content not in conjunction with a non-Google map (6.2): a Google geocode is not drawn on an OpenStreetMap or MapLibre map. Attribution: the Google Maps logo whenever possible, the text \"Google Maps\" where space is limited (unmodified, not localized), the data providers' notices Google gives, never removed, hidden or obscured; the Maps JavaScript API and Static Maps draw them on the map. Commercial use: under the Google Maps Platform agreement accepted with the billing account and key."
+    }
+}

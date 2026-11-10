@@ -34,6 +34,13 @@ Options: `api_key`, `server_key`, `secret`, `version` (weekly), `language`, `reg
 
 ## Consent and terms
 
+The terms as data in `policy.json` (omnisense/contracts' usage policy, read on 2026-11-10 from
+the Maps Platform Terms of 2026-08-26 and the Service Specific Terms of 2026-10-28):
+caching, storage and redistribution forbidden (the Geocoding API's coordinates may be kept 30
+days, place IDs indefinitely), no use with or near a non-Google map, the Google Maps logo or the
+text "Google Maps" and the data providers' notices kept, a key required; the quotas unknown
+(the Cloud project's, no default published).
+
 The live map loads Google's script and tiles from the visitor's browser
 (`maps.googleapis.com`, `maps.gstatic.com`, `fonts.googleapis.com`): a third party, loaded
 through the host's consent gate (`omnimap.js`'s `consent`, feature `MAP`). Google's terms

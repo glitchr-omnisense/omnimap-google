@@ -14,6 +14,7 @@
     "require": {
         "php": ">=8.2",
         "geocoder-php/google-maps-provider": "^4.7",
+        "omnisense/contracts": "^1.0@dev",
         "omnisense/omnimap": "^1.0@dev",
         "psr/http-client": "^1.0",
         "psr/simple-cache": "^2.0|^3.0",
@@ -38,6 +39,9 @@
         }
     },
     "extra": {
+        "omnisense": {
+            "policy": "policy.json"
+        },
         "branch-alias": {
             "dev-1.x": "1.x-dev"
         }
