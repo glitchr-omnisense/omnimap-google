@@ -14,6 +14,12 @@ host:
 - **ux-google's names** - `legacy_signature: true` names a view's picture as glitchr/ux-google
   named its captures, so they stay valid.
 
+```sh
+composer require omnisense/omnimap omnimap/google
+```
+
+It needs an API key of a Google Cloud project with the Maps JavaScript API (and Static Maps, Geocoding where used) enabled.
+
 ```php
 use Omnimap\Google\GoogleFactory;
 use Omnimap\Registry;

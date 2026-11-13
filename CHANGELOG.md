@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-11-13
+
+The first stable version. It requires `omnisense/contracts` `^1.0`, `omnisense/omnimap` `^1.0` with no stability flag, so `composer require omnimap/google` installs it in a project with Composer's default minimum-stability; the 1.x series follows semantic versioning. A tag `vX.Y.Z` is released by `.github/workflows/release.yml` once the package's CI passes on it.
+
 ### Added
 
 - `policy.json`: the provider's usage policy as data (omnisense/contracts' schema), named in

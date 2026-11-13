@@ -14,8 +14,8 @@
     "require": {
         "php": ">=8.2",
         "geocoder-php/google-maps-provider": "^4.7",
-        "omnisense/contracts": "^1.0@dev",
-        "omnisense/omnimap": "^1.0@dev",
+        "omnisense/contracts": "^1.0",
+        "omnisense/omnimap": "^1.0",
         "psr/http-client": "^1.0",
         "psr/simple-cache": "^2.0|^3.0",
         "symfony/http-client-contracts": "^3.0"
